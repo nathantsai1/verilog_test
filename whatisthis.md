@@ -14,7 +14,7 @@ wire, reg, logic: signal types in Verilog, and represent either 0, 1, Z, or X
 wire: represent **physical** connections between different components of a design.
 reg: represent **internal storage** in a desing. Can only be driven by one source, and get stable values at end of every clock cycle
 logic: **combination** of wire & reg **signals**. Can be driven by multiple sources, but their values are stable at end of clock cycle
-
+Instantiates : copy mini-module(module) to big-module(container) as component, which allows for heirarchical design(nested modules)
 
 Line:
 10-18 == /* 
@@ -40,6 +40,19 @@ Line:
     Customize this by changing the screen resolution (640x480->1024x768) by changing aforementioned variables
 */
 
- - == /*
+51-52 == /*
     declare individual 'wire' signals for each button on the gamepad. 
     Declare smth like 'wire [7:0] joystick_x' to create analog values instead of digital ones
+*/
+
+54-75 = /*
+    Instantiate gampad_pmod_single module - a driver to interface with gamepad. This takes serial data frmo the gamepad's data, clock, & latch pins, and decode them into individual button signals. Customize by adding debouncing logic within module
+*/
+
+77-81 = /*
+    Declare positions of bird/hole(9 bits, and thus 512 positions), and pipe(10 bits, thus 1024 positions). The score is 8 bit, up to 255 positions. These wires can be continuously updated by the game control, which makes the game dynamic. Add power-ups, enemies, or multiple birds here for customization
+ */
+
+ = /*
+    instantiate 'gameControl' module(game logic)(map wires to top-level module signals). Customize by changing the different game inputs.
+ */
